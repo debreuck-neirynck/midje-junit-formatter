@@ -1,4 +1,4 @@
-(defproject dn/midje-junit-formatter "0.1.1-SNAPSHOT"
+(defproject dn/midje-junit-formatter "0.1.1"
   :description "Formats the midje output to a JUnit-style XML for CI/CD purposes"
   :url "https://www.d-n.be"
   :license {:name "Eclipse Public License"
