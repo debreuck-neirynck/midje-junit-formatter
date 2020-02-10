@@ -12,4 +12,5 @@
                                       :password [:gpg :env/nexus_pass]}]
                         ["releases"  {:url "https://nexus.d-n.be/repository/dn-releases"
                                       :username [:gpg :env/nexus_user]
-                                      :password [:gpg :env/nexus_pass]}]])
+                                      :password [:gpg :env/nexus_pass]
+                                      :sign-releases false}]])
