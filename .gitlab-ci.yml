@@ -1,0 +1,45 @@
+image: circleci/clojure:openjdk-13-lein-buster
+
+before_script:
+  # Leiningen settings
+  - export LEIN_ROOT=1
+  - mkdir ~/.lein
+  - 'echo "{:user {:local-repo \"$CI_PROJECT_DIR/repo\"}}" > ~/.lein/profiles.clj'
+
+client:test:
+  stage: test
+  script:
+    - lein midje :config midje-config.clj
+  artifacts:
+    reports:
+      junit: target/surefire-reports/*.xml
+  cache:
+    key:
+      files:
+        - project.clj
+    paths:
+      - $CI_PROJECT_DIR/repo
+    policy: pull-push
+
+client:clj:deploy:
+  stage: publish
+  script:
+    - lein deploy
+  cache:
+    key:
+      files:
+        - project.clj
+    paths:
+      - $CI_PROJECT_DIR/repo
+    policy: pull
+  dependencies:
+    - client:clj:test
+  rules:
+    # Deploy if the branch is develop or a release branch
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^release/'
+      when: on_success
+
+stages:
+  - test
+  - package
+  - publish
