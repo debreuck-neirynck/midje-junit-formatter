@@ -8,10 +8,15 @@
             [midje.emission.plugins.util :as util]
             [midje.emission.plugins.silence :as silence]
             [midje.emission.plugins.default-failure-lines :as lines]
-            [clj-time.core :as time]
+            [java-time :as time]
             [clojure.string :as str]
-            [clojure.core.incubator :refer (dissoc-in)]
+            #_[clojure.core.incubator :refer (dissoc-in)]
             [clojure.xml :as xml :only [emit-element]]))
+
+(defn- dissoc-in [x path]
+  (if (= 1 (count path))
+    (dissoc x (first path))
+    (update-in x (drop-last path) dissoc (last path))))
 
 (defonce report-file (atom nil))
 (defonce last-fact (atom {}))
@@ -53,9 +58,13 @@
       (fact/description fact)
       (str (fact/file fact) ":" (fact/line fact))))
 
+(defn- now []
+  (time/instant))
+
 (defn process-fact [fact]
-  (let [elapsed (/ (time/in-msecs (time/interval (-> fact :attrs :start-time)
-                                                 (-> fact :attrs :stop-time)))
+  (let [elapsed (/ (time/as (time/duration (or (-> fact :attrs :start-time) (now))
+                                           (or (-> fact :attrs :stop-time) (now)))
+                            :millis)
                    1000.0)]
     (-> fact
         (dissoc-in [:attrs :start-time])
@@ -87,10 +96,12 @@
   (let [fact-namespace (str (fact/namespace fact))
         fact-name (fact-name fact)]
     (reset! last-fact {:tag :testcase
-                       :attrs {:classname (escape fact-namespace) :name (escape fact-name) :start-time (time/now)}})))
+                       :attrs {:classname (escape fact-namespace)
+                               :name (escape fact-name)
+                               :start-time (now)}})))
 
 (defn finishing-fact [fact]
-  (swap! last-fact assoc-in [:attrs :stop-time] (time/now)))
+  (swap! last-fact assoc-in [:attrs :stop-time] (now)))
 
 (defn possible-new-namespace [ns]
   (when-not (= @last-ns ns)

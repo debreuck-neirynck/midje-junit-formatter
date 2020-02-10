@@ -3,14 +3,14 @@
         midje.checkers
         midje.checking.core
         midje.util.exceptions)
-  (:require midje.clojure.core
+  (:require #_midje.clojure.core
             [midje.config :as config]
             [clojure.string :as str]
             [midje.emission.api :as emit]
             [midje.parsing.util.error-handling :as error]
             [midje.emission.state :as state]))
 
-(midje.clojure.core/immigrate 'midje.clojure.core)
+#_(midje.clojure.core/immigrate 'midje.clojure.core)
 
 ;;; The "silent" versions of fact and formula, which produce no user-visible results
 ;;; but do stash failures for later examination.
@@ -269,11 +269,7 @@
              (captured-output (state/with-isolated-output-counters ~fact1)))
      ~fact2))
 
-
-
 ;;; OLD STUFF. Keep checking which of these are worth salvaging.
-
-
 
 (defn at-line [line-no form] 
    (with-meta form {:line line-no}))
@@ -290,7 +286,3 @@
        (defn ~name ~args
          (swap! ~atom-name inc)
          ~@body))))
-
-
-
-

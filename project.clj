@@ -1,10 +1,9 @@
 (defproject midje-junit-formatter "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Formats the midje output to a JUnit-style XML for CI/CD purposes"
+  :url "https://www.d-n.be"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.4.0"]
-                 [org.clojure/core.incubator "0.1.1"]
-                 [midje "1.5.1"]
-                 [clj-time "0.5.0"]]
-  :profiles {:dev {:plugins [[lein-midje "3.0.0"]]}})
+  :dependencies [[org.clojure/clojure "1.10.0"]
+                 [midje "1.9.9"]
+                 [clojure.java-time "0.3.2"]]
+  :profiles {:dev {:plugins [[lein-midje "3.2.1"]]}})
