@@ -33,7 +33,7 @@ client:clj:deploy:
       - $CI_PROJECT_DIR/repo
     policy: pull
   dependencies:
-    - client:clj:test
+    - client:test
   rules:
     # Deploy if the branch is develop or a release branch
     - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^release/'
