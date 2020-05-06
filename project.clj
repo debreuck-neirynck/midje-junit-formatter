@@ -14,4 +14,7 @@
    ["releases"  {:url "https://nexus.d-n.be/repository/maven-releases/"
                  :username [:gpg :env/nexus_user]
                  :password [:gpg :env/nexus_pass]
-                 :sign-releases false}]])
+                 :sign-releases false}]
+   ["dn-clojars" {:url "https://clojars.org/repo"
+                  :username [:gpg :env/clojars_user]
+                  :password [:gpg :env/clojars_pass]}]])
