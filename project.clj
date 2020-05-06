@@ -7,10 +7,11 @@
                  [midje "1.9.9"]
                  [clojure.java-time "0.3.2"]]
   :profiles {:dev {:plugins [[lein-midje "3.2.1"]]}}
-  :deploy-repositories [["snapshots" {:url "https://nexus.d-n.be/repository/snapshots"
-                                      :username [:gpg :env/nexus_user]
-                                      :password [:gpg :env/nexus_pass]}]
-                        ["releases"  {:url "https://nexus.d-n.be/repository/releases"
-                                      :username [:gpg :env/nexus_user]
-                                      :password [:gpg :env/nexus_pass]
-                                      :sign-releases false}]])
+  :deploy-repositories
+  [["snapshots" {:url "https://nexus.d-n.be/maven-repository/snapshots"
+                 :username [:gpg :env/nexus_user]
+                 :password [:gpg :env/nexus_pass]}]
+   ["releases"  {:url "https://nexus.d-n.be/maven-repository/releases"
+                 :username [:gpg :env/nexus_user]
+                 :password [:gpg :env/nexus_pass]
+                 :sign-releases false}]])

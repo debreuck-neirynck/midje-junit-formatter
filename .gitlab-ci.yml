@@ -6,7 +6,7 @@ before_script:
   - mkdir ~/.lein
   - 'echo "{:user {:local-repo \"$CI_PROJECT_DIR/repo\"}}" > ~/.lein/profiles.clj'
 
-client:test:
+clj:test:
   stage: test
   script:
     - lein midje :config midje-config.clj
@@ -21,7 +21,7 @@ client:test:
       - $CI_PROJECT_DIR/repo
     policy: pull-push
 
-client:clj:deploy:
+clj:deploy:
   stage: publish
   script:
     - lein deploy
@@ -33,7 +33,7 @@ client:clj:deploy:
       - $CI_PROJECT_DIR/repo
     policy: pull
   dependencies:
-    - client:test
+    - clj:test
   rules:
     # Deploy if the branch is develop or a release branch
     - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH =~ /^release/'
