@@ -8,10 +8,10 @@
                  [clojure.java-time "0.3.2"]]
   :profiles {:dev {:plugins [[lein-midje "3.2.1"]]}}
   :deploy-repositories
-  [["snapshots" {:url "https://nexus.d-n.be/maven-repository/snapshots"
+  [["snapshots" {:url "https://nexus.d-n.be/repository/maven-snapshots"
                  :username [:gpg :env/nexus_user]
                  :password [:gpg :env/nexus_pass]}]
-   ["releases"  {:url "https://nexus.d-n.be/maven-repository/releases"
+   ["releases"  {:url "https://nexus.d-n.be/repository/maven-releases/"
                  :username [:gpg :env/nexus_user]
                  :password [:gpg :env/nexus_pass]
                  :sign-releases false}]])
